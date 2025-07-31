@@ -4,7 +4,7 @@
 # The script follows the example provided by the authors of the phytotools package and ideas from
 # Antti Takolander (2019)
 
-# Written by Suleiman Dauda January, 2020.
+# Written by Suleiman Dauda January 2020.
 
 
 rm (list=ls()) # To clear the workspace
@@ -14,9 +14,7 @@ rm (list=ls()) # To clear the workspace
 # Step 1 ##########################################################################
 ## To load the RLC data - having 3 columns (par, etr, id)
 
-rlc.data <- read.csv("/Users/suleiman/My Drive/Phd research/RESULTS/1 Litre experiments/A. flexuosus/RLC A.flexuosus Day 3 R format.csv")
-
-## read.table(file.choose(),header=TRUE,sep=",")
+rlc.data <- read.csv("file path name.csv")
 
 
 # If loaded data has replicates - continue to step 2, otherwise proceed to step 3
@@ -105,7 +103,7 @@ for (i in 1:ncurves){
 rlc.parameters
 
 # To save the fitted RLC parameters as a csv file in the working directory
-write.csv(rlc.parameters, "RLC parameters (A.flexuosus 1L Exp. (Day 3))(03.06.2020).csv",row.names=FALSE) # Always change the no and date
+write.csv(rlc.parameters, "RLC parameters (Species name 1L Exp. (Day 3))(03.06.2020).csv",row.names=FALSE) # Always change the no and date
                                                                             # inorder not to overwrite previous result     
 
 # Step 7  ##########################################################################
@@ -170,7 +168,7 @@ range (r$etr) ## Run to know the limit of the y-axis
 
 ## TIFF plot, 600 DPI or PPI
 
-tiff(file = "RLC A. flexuosus 1L.tiff", width = 6500, height = 4500, pointsize= 25,       # To save plot, edit "file name.tiff" to match
+tiff(file = "RLC Species name 1L.tiff", width = 6500, height = 4500, pointsize= 25,       # To save plot, edit "file name.tiff" to match
      restoreConsole = TRUE,units = "px", res = 600,  compression = "lzw")  # every new plot!
 
 par(xpd = T, bty="o", mar = par(mgp=c(3,0.7,0),mar=c(5,4,4,2)+0.1)$mar + c(-1.5,-0.5,-3,2),tck = -0.021)
@@ -230,7 +228,7 @@ legend(1250,160, c("1.7","2.5","3.4","3.8","7.4","21.4","589.0"),cex=1,
 
 
 text(50, 170, expression(bold('a.')))
-text(310, 170, expression(italic("A. flexuosus")))
+text(310, 170, expression(italic("Species name")))
 
 
 dev.off()  
@@ -325,6 +323,6 @@ for (i in 1:ncurves){
 rlc.parameters
 
 # To save the fitted RLC parameters as a csv file in the working directory
-write.csv(rlc.parameters, "RLC parameters REPLICATE (A.flexuosus 1L Exp. (Day 3))(03.06.2020).csv",row.names=FALSE) # Always change the no and date
+write.csv(rlc.parameters, "RLC parameters REPLICATE (Species name.csv",row.names=FALSE) # Always change the no and date
 # inorder not to overwrite previous result     
 
