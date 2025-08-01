@@ -4,4 +4,4 @@ Fitting of fluorescence data from PhytoPAM to make RLC in R using phytotools pac
 
 Required R packages
 * phytotools
-* tidyverse
+* dplyr
