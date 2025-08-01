@@ -4,11 +4,7 @@
 # The script follows the example provided by the authors of the phytotools package and ideas from
 # Antti Takolander (2019)
 
-# Written by Suleiman Dauda January 2020.
-
-
-rm (list=ls()) # To clear the workspace
-# ctrl+l or cmd+l (in Mac) to clear the console
+# Written by Suleiman Dauda, January 2020.
 
 
 # Step 1 ##########################################################################
