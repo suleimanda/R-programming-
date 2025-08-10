@@ -1,0 +1,89 @@
+
+library(Biostrings)
+
+# Define sequences
+# Loading sequences
+Sequence_L6 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seqL6.txt", format = "fasta") #Unknwon isolate sequence
+
+# Loading Blasted sequences 
+seq1 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq1 - L6.txt", format = "fasta")
+seq2 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq2 - L6.txt", format = "fasta")
+seq3 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq3 - L6.txt", format = "fasta")
+seq4 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq4 - L6.txt", format = "fasta")
+seq5 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq5 - L6.txt", format = "fasta")
+seq6 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq6 - L6.txt", format = "fasta")
+seq7 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq7 - L6.txt", format = "fasta")
+seq8 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq8 - L6.txt", format = "fasta")
+seq9 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq9 - L6.txt", format = "fasta")
+seq10 <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6/seq10 - L6.txt", format = "fasta")
+
+# Assign a name to the sequence
+names(Sequence_L6) <- "L6 isolate"
+
+names(seq1) <- "Bacillus cereus strain YB3"
+names(seq2) <- "Bacillus sp. (in: firmicutes) strain IIRRSD1"
+names(seq3) <- "Bacillus cereus strain KUJS2"
+names(seq4) <- "Bacillus anthracis strain Ames"
+names(seq5) <- "Bacillus tropicus strain LG2"
+names(seq6) <- "Bacillus sp. clone KWLB218"
+names(seq7) <- "Bacillus thuringiensis strain MD4"
+names(seq8) <- "Bacillus sp. BTAI"
+names(seq9) <- "Bacillus sp. clone KWLB210"
+names(seq10) <- "Bacillus anthracis clone CVP96"
+
+# Combine sequences into one set
+sequences <- c(Sequence_L6,seq1, seq2, seq3, seq4, seq5, seq6, seq7, seq8, seq9, seq10)
+
+# Write sequences to a FASTA file
+writeXStringSet(sequences, "L6output.fasta")
+
+# Load the required packages
+library(seqinr)
+library(phangorn)
+library(Biostrings)
+
+# Using Biostrings
+all_dna_sequences <- readDNAStringSet("/Users/suleiman/My Drive/Zainab Dauda/L6output.fasta", format="fasta")
+
+# Check assigned names
+names(all_dna_sequences)
+
+library(msa)
+
+
+alignment <- msa(all_dna_sequences, method = "Muscle")
+
+
+library(ape)
+library(phangorn)
+alignment_ape <- as.phyDat(msaConvert(alignment, type = "ape::DNAbin"))
+
+dist_matrix <- dist.ml(alignment_ape)  # Use dist.ml for phyDat objects
+tree <- nj(dist_matrix)  # Construct Neighbor-Joining tree
+tree$tip.label
+
+
+plot.phylo(tree, type = "phylogram", show.tip.label = TRUE, show.node.label = TRUE,
+           cex = 0.8)  # Or "cladogram", "unrooted", etc.
+nodelabels(height =1, width =1)
+
+library(ggtree)
+
+options(ignore.negative.edge = TRUE)  # avoid the negative edge length warning
+
+Q <- ggtree(tree, branch.length = 1) +
+  geom_tiplab(linesize = 0.5, size = 3.5) +
+  geom_text(aes(label = node, x = branch), 
+            size = 2.5, hjust = 1.5, vjust = -0.5, color = "black") +
+  xlim(-0.05, 1.8) +
+  theme_tree2()
+
+
+Q
+
+ggsave("L6 Phylogenetic tree.tiff", plot = Q, dpi= 600, dev='tiff', height= 6, width= 10, units="in",
+       pointsize = 25, compression = "lzw")
+
+
+
+
