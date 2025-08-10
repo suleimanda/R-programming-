@@ -1,0 +1,20 @@
+# Trimming out the 16S RNA sequence from an entire genome
+
+library(Biostrings)
+
+# Read the complete genome sequence
+genome <- readDNAStringSet("/Users/genome/Whole-genome.txt", format = "fasta")
+
+# Extract first sequence
+genome_seq <- genome[[1]]
+
+# Trim to your BLAST coordinates (example: 10500–12100)
+gene16S <- subseq(genome_seq, start = 10500, end = 12100)
+
+# Wrap into a DNAStringSet so it can be named
+gene16S_set <- DNAStringSet(gene16S)
+names(gene16S_set) <- "16S_rRNA"
+
+
+# Save as FASTA
+writeXStringSet(gene16S_set, "16S_only.fasta")
